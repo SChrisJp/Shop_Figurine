@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - Figur'In{% endblock %}
+
+{% block body %}
+    <h2>Voir mes commandes</h2>
+    {% if orders %}
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Articles</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Passée le</th>
+                    <th scope="col">Référence</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.totalQuantity }}</td>
+                        <td>
+                            {% if order.state == 1 %}
+                                Paiment accepté
+                            {% elseif order.state == 2 %}
+                                En préparation
+                            {% else %}
+                                Expédiée
+                            {% endif %}
+                        </td>
+                        <td>{{ ((order.carrierPrice + order.total) / 100)|number_format(2, ',', '.') }} €</td>
+                        <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td><span class="badge badge-secondary">{{ order.reference }}</span></td>
+                        <td>
+                            <a href="{{ path('account_order', {'reference': order.reference}) }}">Consulter la commande</a>
+                            {% if order.state == 1 %}
+                                <a href="{{ path('cancel_order', {'reference': order.reference}) }}" class="btn btn-sm ml-3" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?')">❌</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Vous n'avez effectué aucune commande pour le moment.</p>
+    {% endif %}
+    <a title="Retour vers votre espace membres" href="{{ path('account') }}">Retourner à mon compte</a>
+{% endblock %}

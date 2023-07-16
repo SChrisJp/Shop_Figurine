@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande - Figur'In{% endblock %}
+
+{% block body %}
+    <h2>Annulation de votre commande</h2>
+    <p>
+        Bonjour {{order.user.firstname}} {{order.user.lastname}}, <br>
+        Votre paiement pour la commande n° <b>{{order.reference}}</b> a bien été annulé<br>
+    </p>
+    <hr>
+    <a class="btn btn-outline-success" href="{{ path('order') }}">Réessayer</a>
+{% endblock %}

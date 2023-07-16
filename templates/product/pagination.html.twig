@@ -1,0 +1,22 @@
+{# <div class="pagination">
+     {% if pagination.getTotalItemCount() > 1 %}
+        {% if pagination.currentPageNumber > pagination.firstPageNumber %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: pagination.firstPageNumber})) }}" class="pagination-link">First</a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: pagination.currentPageNumber - 1})) }}" class="pagination-link">Previous</a>
+        {% endif %}
+
+        
+        {% for page in pagination.pagesInRange %}
+            {% if page == pagination.currentPageNumber %}
+                <span class="pagination-current-page">{{ page }}</span>
+            {% else %}
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: page})) }}" class="pagination-link">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+        
+        {% if pagination.hasNextPage() %}
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: pagination.nextPageNumber})) }}" class="pagination-link">Next</a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({page: pagination.lastPageNumber})) }}" class="pagination-link">Last</a>
+        {% endif %}
+    {% endif %}
+</div> #}
